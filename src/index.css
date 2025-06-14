@@ -1,0 +1,41 @@
+/* Import Tailwind's base styles, components, and utilities */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Define custom base styles */
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] text-gray-200;
+    overflow-x: hidden; /* Prevent horizontal scroll from starfield */
+  }
+}
+
+/* Starfield Background Animation */
+#star-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -10;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(-250px) rotateZ(0deg);
+  }
+  to {
+    transform: translateY(100vh) rotateZ(360deg);
+  }
+}

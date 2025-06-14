@@ -1,11 +1,10 @@
+import React from "react";
+
 export const Footer = () => (
-	<footer className="footer mt-auto py-3 text-center">
+	<footer className="mt-auto p-4 text-center bg-black/20 backdrop-blur-sm border-t border-white/5">
 		<p>
-			Check the <a target="_blank" href="https://4geeks.com/docs/start/start-react-advanced-project">template documentation</a> <i className="fa-solid fa-file"></i> for help.
-		</p>
-		<p>
-			Made with <i className="fa fa-heart text-danger" /> by{" "}
-			<a href="http://www.4geeksacademy.com">4Geeks Academy</a>
+			Made with <i className="fa fa-heart text-red-500" /> by
+			<a href="http://www.4geeksacademy.com" className="text-yellow-400 hover:text-yellow-300 transition-colors"> 4Geeks Academy</a>
 		</p>
 	</footer>
 );

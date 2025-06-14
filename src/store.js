@@ -1,32 +1,65 @@
-export const initialStore=()=>{
-  return{
-    message: null,
-    todos: [
-      {
-        id: 1,
-        title: "Make the bed",
-        background: null,
-      },
-      {
-        id: 2,
-        title: "Do my homework",
-        background: null,
-      }
-    ]
-  }
-}
+export const initialStore = {
+    people: [],
+    planets: [],
+    vehicles: [],
+    favorites: [],
+    loading: true, // Start in a loading state
+};
 
-export default function storeReducer(store, action = {}) {
-  switch(action.type){
-    case 'add_task':
+// Define action types for clarity and to avoid typos
+export const actionTypes = {
+    LOAD_DATA_START: "LOAD_DATA_START",
+    LOAD_DATA_SUCCESS: "LOAD_DATA_SUCCESS",
+    LOAD_DATA_FAILURE: "LOAD_DATA_FAILURE",
+    TOGGLE_FAVORITE: "TOGGLE_FAVORITE",
+};
 
-      const { id,  color } = action.payload
+const storeReducer = (state, action) => {
+    switch (action.type) {
+        case actionTypes.LOAD_DATA_START:
+            return {
+                ...state,
+                loading: true,
+            };
 
-      return {
-        ...store,
-        todos: store.todos.map((todo) => (todo.id === id ? { ...todo, background: color } : todo))
-      };
-    default:
-      throw Error('Unknown action.');
-  }    
-}
+        case actionTypes.LOAD_DATA_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                people: action.payload.people,
+                planets: action.payload.planets,
+                vehicles: action.payload.vehicles,
+            };
+        
+        case actionTypes.LOAD_DATA_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error, // Optionally store error state
+            };
+
+        case actionTypes.TOGGLE_FAVORITE:
+            const item = action.payload;
+            const isFavorite = state.favorites.some(fav => fav.uid === item.uid && fav.type === item.type);
+
+            if (isFavorite) {
+                // Remove from favorites
+                const updatedFavorites = state.favorites.filter(fav => !(fav.uid === item.uid && fav.type === item.type));
+                return {
+                    ...state,
+                    favorites: updatedFavorites,
+                };
+            } else {
+                // Add to favorites
+                return {
+                    ...state,
+                    favorites: [...state.favorites, item],
+                };
+            }
+
+        default:
+            return state;
+    }
+};
+
+export default storeReducer;
